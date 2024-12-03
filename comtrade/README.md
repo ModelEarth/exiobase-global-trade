@@ -11,3 +11,7 @@ Jupyter Notebook, processed datasets (CSV), and visualizations (bar chart, line 
 2. comtrade-output.csv (Dataset)
 
 3. comtrade-report.pdf (Report)
+
+### Issue:
+
+Unable to limit rows returned. Tried maxrec, count, max, and cdlimit parameters to limit the records. Instead, the API returns all available records.
