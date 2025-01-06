@@ -7,57 +7,20 @@
 <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link type="text/css" rel="stylesheet" href="../../localsite/css/base.css" id="/localsite/css/base.css" />
 <script type="text/javascript" src="../../localsite/js/localsite.js?showheader=true&showsearch=true&showyear=true"></script>
 
 <script>
 loadMarkdown("../README.md", "readmeDiv", "_parent");
 
-let datascapeFile = "../../map-testing/public/maps/map-2017.html";
-let datascapeFileDiv = "#mapDiv";
-loadLocalPge(datascapeFile, datascapeFileDiv);
+let localFile = "../../map-testing/public/maps/map-2017.html";
+let localFileDiv = "#mapDiv";
+loadLocalPge(localFile, localFileDiv);
 
-function loadLocalPge(datascapeFile, datascapeFileDiv) {
-  waitForElm(datascapeFileDiv).then((elm) => {
+function loadLocalPge(localFile, localFileDiv) {
+  waitForElm(localFileDiv).then((elm) => {
 
-    $.get(datascapeFile, function(theHtmlFile) { // Append to #datascape
-      //$(theHtmlFile).find("#insertedText").appendTo(datascapeFileDiv);
-      $(theHtmlFile).appendTo(datascapeFileDiv);
-
-      /*
-      let elemDiv = document.createElement('div');
-      elemDiv.id = "localsiteDetails";
-      elemDiv.style.cssText = "display:none";
-      elemDiv.innerHTML = "testing";
-      document.body.appendChild(elemDiv);
-
-      consoleLog("Plotly HTML Loaded: " + datascapeFile);
-      initSitelook();
-      if (typeof relocatedStateMenu != "undefined") {
-        relocatedStateMenu.appendChild(state_select); // For apps hero
-        $(".stateFilters").hide();
-      }
-      if (typeof relocatedScopeMenu != "undefined") {
-        relocatedScopeMenu.appendChild(selectScope); // For apps hero
-      }
-      waitForElm('#filterClickLocation').then((elm) => {
-        if (param.showstates != "false") {
-            $("#filterClickLocation").show();
-        }
-        $("#mapFilters").prependTo("#fullcolumn");
-        // Move back up to top. Used when header.html loads search-filters later (when clicking search icon)
-        $("#local-header").prependTo("#fullcolumn");
-        $("#headerbar").prependTo("#fullcolumn");
-      });
- 
-
-      waitForElm('#fullcolumn').then((elm) => {
-        $("#headerbar").prependTo("#fullcolumn"); // Move back up to top.
-        //$("#bodyMainHolder").prependTo("#fullcolumn"); // Move back up to top.
-        $("#sideTabs").prependTo("#fullcolumn"); // Move back up to top.
-      });
-      */
-
+    $.get(localFile, function(theHtmlFile) { // Get local html file and append to div
+      $(theHtmlFile).appendTo(localFileDiv);
     });
   });
 }
