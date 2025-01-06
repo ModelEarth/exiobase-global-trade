@@ -96,7 +96,14 @@ def make_ghg_map(target_folder: str, which_year: int, exio_system: str = "pxp", 
             new_dict_emission.append(emission)
 
     new_emissions_df = pd.DataFrame({'country':new_dict_country, 'emission':new_dict_emission})
+
+    # log conversion
     new_emissions_df['emission_log'] = np.log(new_emissions_df['emission'])
+
+    # min-max scaling
+    # new_emissions_df['scaled_emission'] = (new_emissions_df['emission'] - new_emissions_df['emission'].min()) / (new_emissions_df['emission'].max() - new_emissions_df['emission'].min())
+
+
 
     with urlopen('https://raw.githubusercontent.com/johan/world.geo.json/refs/heads/master/countries.geo.json') as response:
         countries = json.load(response)
@@ -117,35 +124,38 @@ def make_ghg_map(target_folder: str, which_year: int, exio_system: str = "pxp", 
 
 def make_maps_recurringly(target_folder : str, which_year : int):
     new_year = os.path.join(target_folder, str(which_year))
-    if str(which_year) not in os.listdir(target_folder):
-        os.mkdir(new_year)
     import_folder = os.path.join(new_year, "imports")
     export_folder = os.path.join(new_year, "exports")
-    if import_folder not in os.listdir(new_year):
+
+    if not os.path.exists(new_year):
+        os.mkdir(new_year)
+    if not os.path.exists(import_folder):
         os.mkdir(os.path.join(new_year, "imports"))
-    if export_folder not in os.listdir(new_year):
+    if not os.path.exists(export_folder):
         os.mkdir(os.path.join(new_year, "exports"))
 
     ghg_map = make_it_exist(target_folder = new_year, which_year = which_year)
-
+    df = make_ghg_map(target_folder = new_year, which_year=which_year)
+    df.to_csv(os.path.join(new_year, "internal.csv"))
     #downloading all the imports of a particular year
     for country in ghg_map.columns:
         import_folder = os.path.join(new_year, "imports")
         export_folder = os.path.join(new_year, "exports")
-        df = make_ghg_map(target_folder = new_year, which_year=which_year, target_country = country)
-        df.to_csv(os.path.join(import_folder, country)+".csv")
-        df2 = make_ghg_map(target_folder = new_year, which_year=which_year, origin_country= country)
-        df2.to_csv(os.path.join(export_folder, country)+".csv")
+        if not os.path.join(import_folder, country)+".csv" in os.listdir(import_folder):
+            df1 = make_ghg_map(target_folder = new_year, which_year=which_year, target_country = country)
+            df1.to_csv(os.path.join(import_folder, country)+".csv")
+        if not os.path.join(import_folder, country)+".csv" in os.listdir(import_folder):
+            df2 = make_ghg_map(target_folder = new_year, which_year=which_year, origin_country= country)
+            df2.to_csv(os.path.join(export_folder, country)+".csv")
 
 exio3_folder = "/Users/saatweek/Documents/github/exiobase-global-trade/maps/" # set up a folder within which you'll store all the datasets'
-which_year = 2001 ## can be an integer, or a list of integers (but use int for now)
-# exio_system = 'pxp' ## choose between 'ixi' and 'pxp'
+which_year = 2018 ## can be an integer, or a list of integers (but use int for now)
+exio_system = 'pxp' ## choose between 'ixi' and 'pxp'
 
-# fig = make_ghg_map(exio3_folder, which_year, exio_system = "pxp", target_country=None)
+# fig = make_ghg_map(exio3_folder, which_year, exio_system)
 # fig.show()
 # fig.write_html(os.path.join(exio3_folder, "IOT_" + str(which_year) + "_" + exio_system + ".html"))
 
-# make_maps_recurringly(exio3_folder, which_year)
 for year in range(1999, 2021):
     make_maps_recurringly(exio3_folder, year)
 #################### FASTAPI BACKEND ##################################
