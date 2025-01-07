@@ -98,28 +98,29 @@ def make_ghg_map(target_folder: str, which_year: int, exio_system: str = "pxp", 
     new_emissions_df = pd.DataFrame({'country':new_dict_country, 'emission':new_dict_emission})
 
     # log conversion
-    new_emissions_df['emission_log'] = np.log(new_emissions_df['emission'])
+    # new_emissions_df['emission_log'] = np.log(new_emissions_df['emission'])
 
     # min-max scaling
     # new_emissions_df['scaled_emission'] = (new_emissions_df['emission'] - new_emissions_df['emission'].min()) / (new_emissions_df['emission'].max() - new_emissions_df['emission'].min())
 
 
+    ######## FOR PLOTTING THE EMISSIONS ##########
+    # with urlopen('https://raw.githubusercontent.com/johan/world.geo.json/refs/heads/master/countries.geo.json') as response:
+    #     countries = json.load(response)
 
-    with urlopen('https://raw.githubusercontent.com/johan/world.geo.json/refs/heads/master/countries.geo.json') as response:
-        countries = json.load(response)
-
-    fig = px.choropleth_map(new_emissions_df,
-                                geojson=countries,
-                                locations='country',
-                                color='emission_log',
-                                color_continuous_scale="icefire", #stylistic choice
-                                map_style="carto-positron",
-                                zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
-                                opacity=0.5
-                              )
-
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    # fig = px.choropleth_map(new_emissions_df,
+    #                             geojson=countries,
+    #                             locations='country',
+    #                             color='emission_log',
+    #                             color_continuous_scale="icefire", #stylistic choice
+    #                             map_style="carto-positron",
+    #                             zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
+    #                             opacity=0.5
+    #                           )
+    # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     # return fig
+
+
     return new_emissions_df
 
 def make_maps_recurringly(target_folder : str, which_year : int):
