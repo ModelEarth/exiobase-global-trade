@@ -1,0 +1,15 @@
+{
+    "description": "Download log of EXIOBASE3",
+    "name": "EXIO3",
+    "system": "pxp",
+    "version": "10.5281/zenodo.3583070",
+    "history": [
+        "20250106 13:01:55 - FILEIO -  Downloaded https://zenodo.org/records/5589597/files/IOT_2018_pxp.zip to IOT_2018_pxp.zip",
+        "20250106 13:01:00 - NOTE -  Download log created",
+        "20250106 13:01:00 - NOTE -  python_version: 3.13.0",
+        "20250106 13:01:00 - NOTE -  pymrio_version: 0.5.4",
+        "20250106 13:01:00 - NOTE -  os: Darwin",
+        "20250106 13:01:00 - NOTE -  hostname: Satwiks-MacBook-Air.local",
+        "20250106 13:01:00 - NOTE -  username: saatweek"
+    ]
+}
